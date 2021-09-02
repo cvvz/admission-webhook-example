@@ -13,10 +13,8 @@ webhooks:
         path: "/validate"
       caBundle: ${CA_BUNDLE}
     rules:
-      - operations: [ "CREATE" ]
-        apiGroups: ["apps", ""]
+      - operations: [ "DELETE" ]
+        apiGroups: [""]
         apiVersions: ["v1"]
-        resources: ["deployments","services"]
-    namespaceSelector:
-      matchLabels:
-        admission-webhook-example: enabled
+        resources: ["pods"]
+

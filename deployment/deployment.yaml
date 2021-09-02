@@ -14,11 +14,10 @@ spec:
       labels:
         app: admission-webhook-example
     spec:
-      serviceAccount: admission-webhook-example-sa
       containers:
         - name: admission-webhook-example
-          image: cnych/admission-webhook-example:v1
-          imagePullPolicy: Always
+          image: cvvz/admission-webhook-example:v1
+          imagePullPolicy: IfNotPresent
           args:
             - -tlsCertFile=/etc/webhook/certs/cert.pem
             - -tlsKeyFile=/etc/webhook/certs/key.pem
@@ -33,3 +32,16 @@ spec:
         - name: webhook-certs
           secret:
             secretName: admission-webhook-example-certs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admission-webhook-example-svc
+  labels:
+    app: admission-webhook-example
+spec:
+  ports:
+    - port: 443
+      targetPort: 443
+  selector:
+    app: admission-webhook-example
